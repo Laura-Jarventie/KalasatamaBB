@@ -1,0 +1,18 @@
+#muista lähettää tämä tiedosto omilla tiedoillasi githubiin, jotta voit hakea sen sieltä helposti joka tunti!
+# maalaa alla olevat rivit tunnin alussa ja kopioi ne. Liitä git bashiin. Muista vaihtaa oman projektin tiedot opettajan kansion/projektin nimien tilalle.
+git clone https://github.com/massamasa/kodarit-bb.git
+cd kodarit-bb
+code .
+
+
+# maalaa alla olevat rivit tunnin lopussa ja kopioi ne. Liitä git bashiin projektin juurikansiossa. Muista vaihtaa oman projektin tiedot opettajan tietojen tilalle.
+
+
+git config --global user.name "Matti Österbacka"
+git config --global user.email "matti.osterbacka@gmail.com"
+git add .
+git commit -m"viesti"
+git push
+git config --global --unset user.name
+git config --global --unset user.email
+git config --global --unset credential.helper

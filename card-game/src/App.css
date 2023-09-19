@@ -1,0 +1,21 @@
+.card {
+    width: 120px;
+    height: 200px;
+    border: 2px solid black;
+
+    box-shadow: 1px 1px 4px 1px rgba(0,0,0,0,5);
+    border-radius: 8px;
+    background-color: pink;
+}
+
+.stat-list-item {
+    /* Remove bullet points */
+    list-style: none;
+    display: flex;
+    justify-content: space-between;
+}
+
+.stat-list {
+    margin: 0;
+    padding: 8px 12px;
+}
