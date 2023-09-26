@@ -4,14 +4,12 @@ export default function Card({ card }){
             <div className='card'>
                 <img src={card.kuva} />
                 <ul className="stat-list">
-                  <li className="stat-list-item">
-                    <span>Cuteness</span>
-                    <span>9</span>
-                  </li>
-                  <li className="stat-list-item">
-                    <span>Weight</span>
-                    <span>14kg</span>
-                  </li>
+                {card.stats.map((statsRivi, index) => (
+                    <li className="stat-list-item" key={index}>
+                      <span>{statsRivi.name}</span> 
+                      <span>{statsRivi.value}</span> 
+                      </li>
+                     )) }
                 </ul>
             </div>
         </>
