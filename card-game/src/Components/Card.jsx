@@ -10,7 +10,7 @@ export default function Card({ card }){
                   </li>
                   <li className="stat-list-item">
                     <span>Weight</span>
-                    <span>4kg</span>
+                    <span>14kg</span>
                   </li>
                 </ul>
             </div>
