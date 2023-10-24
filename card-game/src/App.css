@@ -19,3 +19,15 @@
     margin: 0;
     padding: 8px 12px;
 }
+
+.pelialue {
+    display: flex;
+}
+
+.play-button {
+    width: 90px;
+    height: 20px;
+    align-self: center;
+    font-size: medium;
+    font-weight: bold;
+}

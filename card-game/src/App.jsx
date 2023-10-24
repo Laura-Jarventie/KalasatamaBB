@@ -16,20 +16,28 @@ Math.floor(Math.random() * (max - min + 1) ) + min;
   });
 
   const korttipakka = Array(16).fill(null).map((_,index)=>kortti(index));
+  const puoliväli = Math.ceil(korttipakka.length / 2);
   console.log(korttipakka);
 
-  const pelaajanKortti = korttipakka[0];
-  const vastustajanKortti = korttipakka[1];
+  const jaaKortit = () => ({
+    pelaaja: korttipakka.slice(0, puoliväli),
+    vastustaja: korttipakka.slice(puoliväli)
+  })
+console.log(jaaKortit())
+
+  //const pelaajanKortti = korttipakka[0];
+  //const vastustajanKortti = korttipakka[1];
 
 
 function App() {
 
+const [kortit, setKortit] = useState(jaaKortit);
 const [result, setResult] = useState('');
 
 
 function vertaaKortteja() {
- const playerStat = pelaajanKortti.stats[0];
- const opponentStat = vastustajanKortti.stats[0];
+ const playerStat = kortit.pelaaja[0].stats[0];
+ const opponentStat = kortit.vastustaja[0].stats[0];
 
  if (playerStat.value === opponentStat.value) setResult('tasapeli');
  else if (playerStat.value > opponentStat.value) setResult('voitto');
@@ -41,15 +49,19 @@ function vertaaKortteja() {
 
 
   return (
-    <>
+    <div>
     <h1>KISSAKORTTIPELI</h1>
     <p>{result}</p>
+    <div className='pelialue'>
     <p>oma kortti</p>
-      <Card card={pelaajanKortti}/>
-      <button onClick={vertaaKortteja} type='button'>Pelaa</button>
+    <Card card={kortit.pelaaja[0]}/>
+      {/* <Card card={pelaajanKortti}/> */}
+      <button onClick={vertaaKortteja} type='button' className='play-button'>Pelaa</button>
       <p>Vastustajan kortti</p>
-      <Card card={vastustajanKortti}/>
-    </>
+      <Card card={kortit.vastustaja[0]}/>
+      </div>
+    </div>
+   
   )
 }
 
