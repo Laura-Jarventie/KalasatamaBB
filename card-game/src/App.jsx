@@ -13,6 +13,7 @@ Math.floor(Math.random() * (max - min + 1) ) + min;
       {name: 'nopeus', value: getRandomInt(1,40)},
       {name: 'ruokahalu', value: getRandomInt(1,5)},
     ],
+    id: crypto.randomUUID(),
   });
 
   const korttipakka = Array(16).fill(null).map((_,index)=>kortti(index));
@@ -50,15 +51,32 @@ function vertaaKortteja() {
 
   return (
     <div>
+      <div>
     <h1>KISSAKORTTIPELI</h1>
     <p>{result}</p>
+    </div>
     <div className='pelialue'>
+
     <p>oma kortti</p>
-    <Card card={kortit.pelaaja[0]}/>
-      {/* <Card card={pelaajanKortti}/> */}
+    <ul className='korttirivi'>
+      {kortit.pelaaja.map(pelaajanKortti => (
+        <li className='korttirivi-kortti pelaaja' key={pelaajanKortti.id}>
+          <Card card={pelaajanKortti}/>
+        </li> 
+      ))}
+    </ul>
+
       <button onClick={vertaaKortteja} type='button' className='play-button'>Pelaa</button>
+
       <p>Vastustajan kortti</p>
-      <Card card={kortit.vastustaja[0]}/>
+      <ul className='korttirivi'>
+      {kortit.vastustaja.map(vastustajanKortti => (
+        <li className='korttirivi-kortti vastustaja' key={vastustajanKortti.id}>
+          <Card card={vastustajanKortti}/>
+        </li> 
+      ))}
+      </ul>
+
       </div>
     </div>
    

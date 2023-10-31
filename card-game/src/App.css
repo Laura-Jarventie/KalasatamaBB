@@ -31,3 +31,17 @@
     font-size: medium;
     font-weight: bold;
 }
+
+.korttirivi {
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+.korttirivi-kortti.pelaaja {
+    margin-left: -96px;
+}
+
+.korttirivi-kortti.vastustaja {
+    margin-right: -96px;
+}
