@@ -36,6 +36,11 @@
     display: flex;
     margin: 0;
     padding: 0;
+    flex-direction: row-reverse;
+}
+
+.korttirivi.vastustaja {
+    direction: rtl;
 }
 
 .korttirivi-kortti.pelaaja {
@@ -44,4 +49,12 @@
 
 .korttirivi-kortti.vastustaja {
     margin-right: -96px;
+    direction: ltr;
+}
+
+#root {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
 }

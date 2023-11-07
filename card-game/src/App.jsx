@@ -20,11 +20,24 @@ Math.floor(Math.random() * (max - min + 1) ) + min;
   const puoliväli = Math.ceil(korttipakka.length / 2);
   console.log(korttipakka);
 
-  const jaaKortit = () => ({
+
+  function jaaKortit() {
+    shuffle(korttipakka);
+    return { 
     pelaaja: korttipakka.slice(0, puoliväli),
     vastustaja: korttipakka.slice(puoliväli)
-  })
+    };
+  }
 console.log(jaaKortit())
+
+//Fisher-Yates shuffle
+function shuffle(array) {
+  for ( let i=array.length -1; i >0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
 
   //const pelaajanKortti = korttipakka[0];
   //const vastustajanKortti = korttipakka[1];
@@ -57,7 +70,7 @@ function vertaaKortteja() {
     </div>
     <div className='pelialue'>
 
-    <p>oma kortti</p>
+    <h2>omat kortit</h2>
     <ul className='korttirivi'>
       {kortit.pelaaja.map(pelaajanKortti => (
         <li className='korttirivi-kortti pelaaja' key={pelaajanKortti.id}>
@@ -68,8 +81,8 @@ function vertaaKortteja() {
 
       <button onClick={vertaaKortteja} type='button' className='play-button'>Pelaa</button>
 
-      <p>Vastustajan kortti</p>
-      <ul className='korttirivi'>
+      <h2>Vastustajan kortit</h2>
+      <ul className='korttirivi vastustaja'>
       {kortit.vastustaja.map(vastustajanKortti => (
         <li className='korttirivi-kortti vastustaja' key={vastustajanKortti.id}>
           <Card card={vastustajanKortti}/>
