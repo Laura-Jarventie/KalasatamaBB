@@ -1,6 +1,7 @@
 import './App.css'
 import { useState } from 'react';
 import Card from './Components/Card.jsx'
+import PlayButton from './Components/PlayButton.jsx';
 
 const getRandomInt = (min, max) =>
 Math.floor(Math.random() * (max - min + 1) ) + min;
@@ -72,20 +73,20 @@ function vertaaKortteja() {
 
     <h2>omat kortit</h2>
     <ul className='korttirivi'>
-      {kortit.pelaaja.map(pelaajanKortti => (
+      {kortit.pelaaja.map((pelaajanKortti, index) => (
         <li className='korttirivi-kortti pelaaja' key={pelaajanKortti.id}>
-          <Card card={pelaajanKortti}/>
+          <Card card={index===0 ? pelaajanKortti:null}/>
         </li> 
       ))}
     </ul>
 
-      <button onClick={vertaaKortteja} type='button' className='play-button'>Pelaa</button>
+      <PlayButton text={'Pelaa'} handleClick={vertaaKortteja} />
 
       <h2>Vastustajan kortit</h2>
       <ul className='korttirivi vastustaja'>
-      {kortit.vastustaja.map(vastustajanKortti => (
+      {kortit.vastustaja.map((vastustajanKortti, index) => (
         <li className='korttirivi-kortti vastustaja' key={vastustajanKortti.id}>
-          <Card card={vastustajanKortti}/>
+          <Card card={index===0 ? vastustajanKortti:null}/>
         </li> 
       ))}
       </ul>
