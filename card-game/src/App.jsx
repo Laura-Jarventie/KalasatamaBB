@@ -48,6 +48,7 @@ function App() {
 
 const [kortit, setKortit] = useState(jaaKortit);
 const [result, setResult] = useState('');
+const [gameState, setGameState] = useState('pelaa');
 
 
 function vertaaKortteja() {
@@ -60,17 +61,25 @@ function vertaaKortteja() {
 
  //console.log(result);
 
+ setGameState('result');
+}
+
+function uusiKierros() {
+  setGameState('pelaa');
+  setResult('');
 }
 
 
   return (
-    <div>
-      <div>
+    <>
+    
     <h1>KISSAKORTTIPELI</h1>
-    <p>{result}</p>
-    </div>
-    <div className='pelialue'>
+    
+    
+    
+  <div className='pelialue'>
 
+    <div>
     <h2>omat kortit</h2>
     <ul className='korttirivi'>
       {kortit.pelaaja.map((pelaajanKortti, index) => (
@@ -79,9 +88,20 @@ function vertaaKortteja() {
         </li> 
       ))}
     </ul>
+    </div>
 
-      <PlayButton text={'Pelaa'} handleClick={vertaaKortteja} />
+      <div className='center-area'> 
+      <p>{result || ' '} </p>
+      {
+        gameState==='pelaa' ? (
+        <PlayButton text={'Pelaa'} handleClick={vertaaKortteja} />
+        ) : (
+        <PlayButton text={'Seuraava'} handleClick={uusiKierros} />
+        )
+      }
+      </div>
 
+      <div>
       <h2>Vastustajan kortit</h2>
       <ul className='korttirivi vastustaja'>
       {kortit.vastustaja.map((vastustajanKortti, index) => (
@@ -90,9 +110,11 @@ function vertaaKortteja() {
         </li> 
       ))}
       </ul>
+      </div>
+
 
       </div>
-    </div>
+    </>
    
   )
 }

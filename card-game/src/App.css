@@ -58,3 +58,9 @@
     align-items: center;
     gap: 25px;
 }
+
+.center-area {
+    text-align: center;
+    align-self: center;
+    min-width: 20vw;
+}
