@@ -1,4 +1,4 @@
-export default function Card({ card }){
+export default function Card({ card, handleSelect }){
     if(!card)
     return <div className='card' />;
 
@@ -8,7 +8,8 @@ export default function Card({ card }){
                 <img src={card.kuva} />
                 <ul className="stat-list">
                 {card.stats.map((statsRivi, index) => (
-                    <li className="stat-list-item" key={index}>
+                    <li className="stat-list-item" onClick={()=> handleSelect && handleSelect(index)}
+                    key={index}>
                       <span>{statsRivi.name}</span> 
                       <span>{statsRivi.value}</span> 
                       </li>

@@ -19,7 +19,7 @@ Math.floor(Math.random() * (max - min + 1) ) + min;
 
   const korttipakka = Array(16).fill(null).map((_,index)=>kortti(index));
   const puoliväli = Math.ceil(korttipakka.length / 2);
-  console.log(korttipakka);
+  
 
 
   function jaaKortit() {
@@ -29,7 +29,7 @@ Math.floor(Math.random() * (max - min + 1) ) + min;
     vastustaja: korttipakka.slice(puoliväli)
     };
   }
-console.log(jaaKortit())
+
 
 //Fisher-Yates shuffle
 function shuffle(array) {
@@ -40,8 +40,7 @@ function shuffle(array) {
   return array;
 }
 
-  //const pelaajanKortti = korttipakka[0];
-  //const vastustajanKortti = korttipakka[1];
+
 
 
 function App() {
@@ -49,7 +48,7 @@ function App() {
 const [kortit, setKortit] = useState(jaaKortit);
 const [result, setResult] = useState('');
 const [gameState, setGameState] = useState('pelaa');
-
+const [valittuOminaisuus, setSelected] =useState(0);
 
 function vertaaKortteja() {
  const playerStat = kortit.pelaaja[0].stats[0];
@@ -59,12 +58,41 @@ function vertaaKortteja() {
  else if (playerStat.value > opponentStat.value) setResult('voitto');
  else setResult('häviö');
 
- //console.log(result);
+ 
 
  setGameState('result');
 }
 
 function uusiKierros() {
+setKortit(korttipakka => {
+  //tekee kopiot kummankin ekoista korteista
+  const pelatutKortit = [{...korttipakka.pelaaja[0]}, {...korttipakka.vastustaja[0]}];
+  //kopion korttipakasta ilman ensimmäistä korttia - eli heittää meneen ekat kortit
+  const pelaajanKortit = korttipakka.pelaaja.slice(1);
+  const vastustajanKortit = korttipakka.vastustaja.slice(1);
+
+  if (result === 'tasapeli'){
+    return {
+      pelaaja: pelaajanKortit,
+      vastustaja: vastustajanKortit,
+    };
+  }
+  if (result === 'voitto'){
+    return {
+      //kopion omasta pakasta ilman ensimmäsitä korttia ja lisää molempien ekat kortit listan perään
+      pelaaja: [...pelaajanKortit, ...pelatutKortit],
+      vastustaja: vastustajanKortit,
+    };
+  }
+  if (result === 'häviö'){
+    return {
+      pelaaja: pelaajanKortit,
+      vastustaja: [...vastustajanKortit, ...pelatutKortit]
+    };
+  }
+return korttipakka;
+});
+
   setGameState('pelaa');
   setResult('');
 }
@@ -84,14 +112,14 @@ function uusiKierros() {
     <ul className='korttirivi'>
       {kortit.pelaaja.map((pelaajanKortti, index) => (
         <li className='korttirivi-kortti pelaaja' key={pelaajanKortti.id}>
-          <Card card={index===0 ? pelaajanKortti:null}/>
+          <Card card={index===0 ? pelaajanKortti:null} handleSelect={statsIndex => console.log(statsIndex)}/>
         </li> 
       ))}
     </ul>
     </div>
 
       <div className='center-area'> 
-      <p>{result || ' '} </p>
+      <p>{result || 'paina tästä '} </p>
       {
         gameState==='pelaa' ? (
         <PlayButton text={'Pelaa'} handleClick={vertaaKortteja} />
