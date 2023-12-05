@@ -15,6 +15,16 @@
     justify-content: space-between;
 }
 
+.stat-list-item:hover {
+    background-color: rgb(189, 106, 118);
+    outline: 1px double rgb(189, 106, 118) ;
+}
+
+.stat-list-item.valittu {
+    background-color: rgb(189, 106, 118);
+    outline: 1px double rgb(189, 106, 118) ;
+} 
+
 .stat-list {
     margin: 0;
     padding: 8px 12px;
@@ -64,3 +74,4 @@
     align-self: center;
     min-width: 20vw;
 }
+

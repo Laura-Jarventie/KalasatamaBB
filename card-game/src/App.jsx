@@ -51,8 +51,8 @@ const [gameState, setGameState] = useState('pelaa');
 const [valittuOminaisuus, setSelected] =useState(0);
 
 function vertaaKortteja() {
- const playerStat = kortit.pelaaja[0].stats[0];
- const opponentStat = kortit.vastustaja[0].stats[0];
+ const playerStat = kortit.pelaaja[0].stats[valittuOminaisuus];
+ const opponentStat = kortit.vastustaja[0].stats[valittuOminaisuus];
 
  if (playerStat.value === opponentStat.value) setResult('tasapeli');
  else if (playerStat.value > opponentStat.value) setResult('voitto');
@@ -97,6 +97,11 @@ return korttipakka;
   setResult('');
 }
 
+function selectOminaisuus(index) {
+  console.log(index);
+  setSelected(index);
+}
+
 
   return (
     <>
@@ -112,7 +117,9 @@ return korttipakka;
     <ul className='korttirivi'>
       {kortit.pelaaja.map((pelaajanKortti, index) => (
         <li className='korttirivi-kortti pelaaja' key={pelaajanKortti.id}>
-          <Card card={index===0 ? pelaajanKortti:null} handleSelect={statsIndex => console.log(statsIndex)}/>
+          <Card card={index===0 ? pelaajanKortti:null} 
+          selected={valittuOminaisuus}
+          handleSelect={statsIndex => selectOminaisuus(statsIndex)}/>
         </li> 
       ))}
     </ul>
