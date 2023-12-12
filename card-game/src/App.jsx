@@ -9,10 +9,10 @@ Math.floor(Math.random() * (max - min + 1) ) + min;
   const kortti = (index) => ({
     kuva: 'http://placekitten.com/120/100?image=' + index,
     stats: [
-      {name: 'paino', value: getRandomInt(3,15)},
+      {name: 'paino', value: getRandomInt(1,15)},
       {name: 'söpöys', value: getRandomInt(1,100)},
       {name: 'nopeus', value: getRandomInt(1,40)},
-      {name: 'ruokahalu', value: getRandomInt(1,5)},
+      
     ],
     id: crypto.randomUUID(),
   });
@@ -50,6 +50,10 @@ const [result, setResult] = useState('');
 const [gameState, setGameState] = useState('pelaa');
 const [valittuOminaisuus, setSelected] =useState(0);
 
+if(gameState === 'pelaa' && (!kortit.vastustaja.length || !kortit.pelaaja.length)){
+  setGameState('game over');
+}
+
 function vertaaKortteja() {
  const playerStat = kortit.pelaaja[0].stats[valittuOminaisuus];
  const opponentStat = kortit.vastustaja[0].stats[valittuOminaisuus];
@@ -57,9 +61,6 @@ function vertaaKortteja() {
  if (playerStat.value === opponentStat.value) setResult('tasapeli');
  else if (playerStat.value > opponentStat.value) setResult('voitto');
  else setResult('häviö');
-
- 
-
  setGameState('result');
 }
 
@@ -102,6 +103,12 @@ function selectOminaisuus(index) {
   setSelected(index);
 }
 
+function restartGame() {
+  setKortit(jaaKortit);
+  setResult('');
+  setGameState('pelaa');
+}
+
 
   return (
     <>
@@ -130,10 +137,17 @@ function selectOminaisuus(index) {
       {
         gameState==='pelaa' ? (
         <PlayButton text={'Pelaa'} handleClick={vertaaKortteja} />
-        ) : (
+        ) : 
+        gameState === 'game over' ? (
+        <PlayButton text={'Restart'} handleClick={restartGame} />
+        ) :
+        (
         <PlayButton text={'Seuraava'} handleClick={uusiKierros} />
         )
       }
+      {gameState === 'game over' && (
+        <p>GAME OVER!!!</p>
+      )}
       </div>
 
       <div>
@@ -141,7 +155,7 @@ function selectOminaisuus(index) {
       <ul className='korttirivi vastustaja'>
       {kortit.vastustaja.map((vastustajanKortti, index) => (
         <li className='korttirivi-kortti vastustaja' key={vastustajanKortti.id}>
-          <Card card={index===0 ? vastustajanKortti:null}/>
+          <Card card={result && index===0 ? vastustajanKortti:null}/>
         </li> 
       ))}
       </ul>
